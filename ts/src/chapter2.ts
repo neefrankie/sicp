@@ -62,3 +62,43 @@ export function equalRational(x: Pair<number>, y: Pair<number>) {
 export function printRational(x: Pair<number>) {
   return `${numerator(x)} / ${denominator(x)}`;
 }
+
+/**
+ * Exercise 2.2
+ */
+
+// A point can be represented as a pair of numbers:
+// the x coordinates and the y cooridinates
+type Point = Pair<number>;
+
+export function makePoint(x: number, y: number): Point {
+  return pair(x, y);
+}
+
+function xPoint(p: Point): number {
+  return head(p);
+}
+
+function yPoint(p: Point): number {
+  return tail(p);
+}
+
+export function printPoint(p: Point): string {
+  return `(${xPoint(p)}, ${yPoint(p)})`;
+}
+
+// A segement is reprsented as a pair of points:
+// a starting point and and ending point.
+type Segment = Pair<Point>;
+
+export function makeSegment(s: Point, e: Point): Segment {
+  return pair(s, e)
+}
+
+export function startSegment(s: Segment): Point {
+  return head(s);
+}
+
+export function endSegment(s: Segment): Point {
+  return tail(s);
+}
