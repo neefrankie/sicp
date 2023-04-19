@@ -102,3 +102,89 @@ export function startSegment(s: Segment): Point {
 export function endSegment(s: Segment): Point {
   return tail(s);
 }
+
+/**
+ * Exercise 2.3
+ */
+
+function abs(x: number): number {
+  if (x < 0) {
+    return -x;
+  }
+
+  return x;
+}
+// A representation of rectagnle by listing two
+// diagonal points.
+type Rect1 = Pair<Point>;
+// Another representation of rectangle by four points.
+// Two segment for width and height respectively.
+type Rect2 = Pair<Segment>;
+
+function makeRectDiagonal(a: Point, b: Point): Rect1 {
+  return pair(a, b);
+}
+
+function widthRect(r: Rect1): number {
+  const pointA = head(r);
+  const pointB = tail(r);
+  const xA = xPoint(pointA);
+  const xB = xPoint(pointB)
+  return abs(xB - xA);
+}
+
+function heightRect(r: Rect1): number {
+  const pointA = head(r);
+  const pointB = tail(r);
+  const yA = yPoint(pointA);
+  const yB = yPoint(pointB);
+  return abs(yB - yA);
+}
+
+function perimRect(r: Rect1): number {
+  const w = widthRect(r);
+  const h = heightRect(r);
+  return 2 * (w + h);
+}
+
+function areaRect(r: Rect1): number {
+  const w = widthRect(r);
+  const h = heightRect(r);
+
+  return w * h;
+}
+
+function makeRectSeg(a: Point, b: Point): Rect2 {
+  const p = makePoint(head(a), tail(b));
+  const wSeg = makeSegment(a, p);
+  const hSeg = makeSegment(p, b)
+  return pair(wSeg, hSeg);
+}
+
+/** pair implementation without any data structure */
+type PairFunc<T> = (m: number) => T;
+
+function pair1<T>(x: T, y: T): PairFunc<T> {
+  function dispatch(m: number) {
+    return m === 0
+      ? x
+      : (m === 1 ? y : y);
+  }
+
+  return dispatch;
+}
+
+function head1<T>(z: PairFunc<T>): T {
+  return z(0);
+}
+
+function tail2<T>(z: PairFunc<T>): T {
+  return z(1);
+}
+
+function pair2<T>(x: T, y: T) {
+  
+  return function (m: (a: T, b: T) => T): T {
+    return m(x, y)
+  }
+}
