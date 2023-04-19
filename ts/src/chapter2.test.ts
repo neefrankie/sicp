@@ -23,4 +23,12 @@ describe('arithmetic operations for rational numbers', () => {
     const sum = addRational(oneThird, oneThird);
     expect(printRational(sum)).toBe('2 / 3');
   });
+
+  test('1 / (-2) to -1 / 2', () => {
+    expect(printRational(makeRational(1, -2))).toBe("-1 / 2");
+  });
+
+  test('(-1) / (-2) to 1 / 2', () => {
+    expect(printRational(makeRational(-1, -2))).toBe("1 / 2");
+  });
 });

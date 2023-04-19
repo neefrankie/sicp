@@ -2,8 +2,21 @@ import { gcd } from './chapter1';
 import { Pair, head, pair, tail } from './lib/list';
 
 export function makeRational(n: number, d: number): Pair<number> {
-  const g = gcd(n, d)
-  return pair(n / g, d / g);
+  const g = gcd(n, d);
+  n = n / g;
+  d = d / g;
+
+  // Normalize sign.
+  // Leave n as is.
+  // Exercise 2.1
+  if (d > 0) {
+    return pair(n, d);
+  }
+
+  // Two cases left:
+  // d is negative and n is positive, exchange their signs;
+  // d is negative and n is negative, remove minus sign.
+  return pair(-n, -d);
 }
 
 function numerator(x: Pair<number>): number {
