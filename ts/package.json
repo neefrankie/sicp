@@ -5,7 +5,7 @@
   "author": "weiguo.ni",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest --watch"
   },
   "devDependencies": {
     "@jest/globals": "^29.5.0",
