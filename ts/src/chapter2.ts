@@ -188,3 +188,49 @@ function pair2<T>(x: T, y: T) {
     return m(x, y)
   }
 }
+
+/** Exercise 2.7 */
+
+type Interval = Pair<number>
+
+function makeInterval(x: number, y: number): Interval {
+  return pair(x, y);
+}
+
+function upperBound(p: Interval): number {
+  return head(p);
+}
+
+function lowerBound(p: Interval): number {
+  return tail(p)
+}
+
+function addInterval(x: Interval, y: Interval): Interval {
+  return makeInterval(
+    lowerBound(x) + lowerBound(y),
+    upperBound(x) + upperBound(y),
+  );
+}
+
+function subInterval(x: Interval, y: Interval): Interval {
+  return makeInterval(
+    abs(lowerBound(x) - lowerBound(y)),
+    abs(upperBound(x) - upperBound(y)),
+  )
+}
+
+function mulInterval(x: Interval, y: Interval): Interval {
+  const p1 = lowerBound(x) * lowerBound(y);
+  const p2 = lowerBound(x) * upperBound(y);
+  const p3 = upperBound(x) * lowerBound(y);
+  const p4 = upperBound(x) * upperBound(y);
+
+  return makeInterval(Math.min(p1, p2, p3, p4), Math.max(p1, p2, p3, p4));
+}
+
+function divInterval(x: Interval, y: Interval): Interval {
+  return mulInterval(
+    x,
+    makeInterval(1 / upperBound(y), 1 / lowerBound(y)),
+  );
+}
