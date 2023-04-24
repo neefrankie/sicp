@@ -1,5 +1,6 @@
 import { describe, expect, test } from '@jest/globals';
-import { addRational, endSegment, makePoint, makeRational, makeSegment, multiplyRational, printPoint, printRational, startSegment } from './chapter2';
+import { addRational, append, endSegment, lastPair, length, listRef, makePoint, makeRational, makeSegment, multiplyRational, printPoint, printRational, startSegment } from './chapter2';
+import { displayList, list } from './lib/list';
 
 const oneHalf = makeRational(1, 2);
 const oneThird = makeRational(1, 3);
@@ -45,5 +46,31 @@ describe('line segments', () => {
     const end = endSegment(seg);
     expect(printPoint(start)).toBe('(2, 3)');
     expect(printPoint(end)).toBe('(13, 18)');
+  });
+});
+
+describe('list operations', () => {
+  test('get list item n', () => {
+    const squares = list(1, 4, 9, 16, 25);
+    expect(listRef(squares, 3)).toBe(16);
+  });
+
+  test('get list length', () => {
+    const odds = list(1, 3, 5, 7);
+    expect(length(odds)).toBe(4);
+  });
+
+  test('append list', () => {
+    const squares = list(1, 4, 9, 16, 25);
+    const odds = list(1, 3, 5, 7);
+
+    expect(append(squares, odds)).toEqual([1, [4, [9, [16, [25, [1, [3, [5, [7, null]]]]]]]]]);
+  });
+
+  test('last pair', () => {
+    const l = list(23, 72, 149, 34);
+    const last = lastPair(l);
+    expect(last).toEqual([34, null]);
+    expect(displayList(last)).toBe('list(34)');
   });
 });

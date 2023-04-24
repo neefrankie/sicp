@@ -1,5 +1,5 @@
 import { gcd } from './chapter1';
-import { Pair, head, pair, tail } from './lib/list';
+import { List, Pair, head, isNull, pair, tail } from './lib/list';
 
 export function makeRational(n: number, d: number): Pair<number, number> {
   const g = gcd(n, d);
@@ -233,4 +233,29 @@ function divInterval(x: Interval, y: Interval): Interval {
     x,
     makeInterval(1 / upperBound(y), 1 / lowerBound(y)),
   );
+}
+
+export function listRef<T>(items: List, n: number): T {
+  return n == 0
+    ? head(items)
+    : listRef(tail(items), n - 1);
+}
+
+export function length(items: List): number {
+  return isNull(items)
+    ? 0
+    : 1 + length(tail(items));
+}
+
+export function append(list1: List, list2: List): List {
+  return isNull(list1)
+    ? list2
+    : pair(head(list1), append(tail(list1), list2));
+}
+
+// Returns the list that contains only the last element of a given (nonempty) list:
+export function lastPair(items: List): List {
+  return isNull(tail(items))
+    ? items
+    : lastPair(tail(items));
 }
