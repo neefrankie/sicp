@@ -1,14 +1,16 @@
-export type Pair<T> = [T, T];
+export type Pair<H, T> = [H, T];
+type NonEmptyList = Pair<any, any>;
+export type List = null | NonEmptyList;
 
-export function pair<T>(first: T, second: T): Pair<T> {
+export function pair<H, T>(first: H, second: T): Pair<H, T> {
   return [first, second];
 }
 
-function is_pair<T>(x: Pair<T>): boolean {
+function is_pair<T>(x: any): boolean {
   return Array.isArray(x) && x.length === 2;
 }
 
-export function head<T>(p: Pair<T>): T {
+export function head<H, T>(p: Pair<H, T>): H {
   if (is_pair(p)) {
     return p[0];
   }
@@ -16,7 +18,7 @@ export function head<T>(p: Pair<T>): T {
   throw new Error('head(pair) expects a pair as argument pair, but encountered ' + JSON.stringify(p));
 }
 
-export function tail<T>(p: Pair<T>): T {
+export function tail<H, T>(p: Pair<H, T>): T {
   if (is_pair(p)) {
     return p[1];
   }

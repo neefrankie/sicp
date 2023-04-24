@@ -1,7 +1,7 @@
 import { gcd } from './chapter1';
 import { Pair, head, pair, tail } from './lib/list';
 
-export function makeRational(n: number, d: number): Pair<number> {
+export function makeRational(n: number, d: number): Pair<number, number> {
   const g = gcd(n, d);
   n = n / g;
   d = d / g;
@@ -19,47 +19,47 @@ export function makeRational(n: number, d: number): Pair<number> {
   return pair(-n, -d);
 }
 
-function numerator(x: Pair<number>): number {
+function numerator(x: Pair<number, number>): number {
   return head(x);
 }
 
-function denominator(y: Pair<number>): number {
+function denominator(y: Pair<number, number>): number {
   return tail(y);
 }
 
-export function addRational(x: Pair<number>, y: Pair<number>): Pair<number> {
+export function addRational(x: Pair<number, number>, y: Pair<number, number>): Pair<number, number> {
   return makeRational(
     numerator(x) * denominator(y) + numerator(y) * denominator(x),
     denominator(x) * denominator(y)
   );
 }
 
-export function substractRational(x: Pair<number>, y: Pair<number>): Pair<number> {
+export function substractRational(x: Pair<number, number>, y: Pair<number, number>): Pair<number, number> {
   return makeRational(
     numerator(x) * denominator(y) - numerator(y) * denominator(x),
     denominator(x) * denominator(y)
   );
 }
 
-export function multiplyRational(x: Pair<number>, y: Pair<number>) {
+export function multiplyRational(x: Pair<number, number>, y: Pair<number, number>) {
   return makeRational(
     numerator(x) * numerator(y),
     denominator(x) * denominator(y)
   );
 }
 
-export function divideRational(x: Pair<number>, y: Pair<number>) {
+export function divideRational(x: Pair<number, number>, y: Pair<number, number>) {
   return makeRational(
     numerator(x) * denominator(y),
     denominator(x) * numerator(y)
   );
 }
 
-export function equalRational(x: Pair<number>, y: Pair<number>) {
+export function equalRational(x: Pair<number, number>, y: Pair<number, number>) {
   return numerator(x) * denominator(y) === numerator(y) * denominator(x);
 }
 
-export function printRational(x: Pair<number>) {
+export function printRational(x: Pair<number, number>) {
   return `${numerator(x)} / ${denominator(x)}`;
 }
 
@@ -69,7 +69,7 @@ export function printRational(x: Pair<number>) {
 
 // A point can be represented as a pair of numbers:
 // the x coordinates and the y cooridinates
-type Point = Pair<number>;
+type Point = Pair<number, number>;
 
 export function makePoint(x: number, y: number): Point {
   return pair(x, y);
@@ -89,7 +89,7 @@ export function printPoint(p: Point): string {
 
 // A segement is reprsented as a pair of points:
 // a starting point and and ending point.
-type Segment = Pair<Point>;
+type Segment = Pair<Point, Point>;
 
 export function makeSegment(s: Point, e: Point): Segment {
   return pair(s, e)
@@ -116,10 +116,10 @@ function abs(x: number): number {
 }
 // A representation of rectagnle by listing two
 // diagonal points.
-type Rect1 = Pair<Point>;
+type Rect1 = Pair<Point, Point>;
 // Another representation of rectangle by four points.
 // Two segment for width and height respectively.
-type Rect2 = Pair<Segment>;
+type Rect2 = Pair<Segment, Segment>;
 
 function makeRectDiagonal(a: Point, b: Point): Rect1 {
   return pair(a, b);
@@ -191,7 +191,7 @@ function pair2<T>(x: T, y: T) {
 
 /** Exercise 2.7 */
 
-type Interval = Pair<number>
+type Interval = Pair<number, number>
 
 function makeInterval(x: number, y: number): Interval {
   return pair(x, y);
